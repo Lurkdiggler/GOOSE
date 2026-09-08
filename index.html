@@ -184,7 +184,7 @@
   .hero{
     position:relative;padding:calc(96px + 6vh) 0 88px;
     display:flex;flex-direction:column;justify-content:center;
-    background:var(--gold);
+    background:#edd286;background:var(--gold);
     overflow:hidden;
     isolation:isolate;
   }
@@ -229,7 +229,7 @@
     font-family:var(--font-accent);font-style:italic;color:var(--paper-dim);
     font-size:clamp(17px,2vw,22px);max-width:46ch;margin-top:26px;
   }
-  .hero.block-gold p.lede{color:rgba(20,23,26,.72);}
+  .hero.block-gold p.lede{color:rgba(20,23,26,.72) !important;}
   .hero-ctas{display:flex;flex-wrap:wrap;gap:16px;margin-top:40px;}
   .btn{
     display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:999px;
@@ -348,27 +348,31 @@
   }
 
   /* ---------- solid color-block sections ---------- */
-  .block-gold{background:var(--gold);}
-  .block-gold h1,.block-gold h2,.block-gold h3,.block-gold h4{color:var(--ink);}
-  .block-gold p{color:rgba(20,23,26,.7);}
-  .block-gold .accent{color:var(--teal-deep);}
-  .block-gold .eyebrow{color:var(--teal-deep);}
-  .block-gold .eyebrow::before{background:var(--teal-deep);}
-  .block-gold .sub{color:rgba(20,23,26,.68);}
-  .block-gold .btn-primary{background:var(--ink);color:var(--gold-bright);}
-  .block-gold .btn-primary:hover{background:var(--ink-2);}
-  .block-gold .btn-ghost{border-color:rgba(20,23,26,.32);color:var(--ink);}
-  .block-gold .btn-ghost:hover{border-color:var(--teal-deep);color:var(--teal-deep);}
-  .block-gold .timecode{color:rgba(20,23,26,.55);}
-  .block-gold .timecode .dot{background:var(--ink);}
-  .block-gold .hero-stats div{border-left-color:rgba(20,23,26,.25);}
-  .block-gold .hero-stats b{color:var(--teal-deep);}
-  .block-gold .hero-stats span{color:rgba(20,23,26,.55);}
-  .block-gold .svc-card svg,.block-gold .highlight-list svg{color:var(--teal-deep);}
-  .block-gold .svc-card{background:transparent;}
-  .block-gold .svc-card:hover{background:rgba(20,23,26,.05);}
-  .block-gold .svc-card a{color:var(--teal-deep);}
-  .block-gold .svc-grid{background:rgba(20,23,26,.15);border-color:rgba(20,23,26,.15);}
+  /* Hard-locked with explicit hex fallbacks + !important: these must never lose
+     the cascade to a base/dark-theme rule on any browser. */
+  .block-gold{background:#edd286 !important;background:var(--gold) !important;}
+  .block-gold h1,.block-gold h2,.block-gold h3,.block-gold h4{color:#14171a !important;color:var(--ink) !important;}
+  .block-gold p{color:rgba(20,23,26,.7) !important;}
+  .block-gold .accent{color:var(--teal-deep) !important;}
+  .block-gold .eyebrow{color:var(--teal-deep) !important;}
+  .block-gold .eyebrow::before{background:var(--teal-deep) !important;}
+  .block-gold .sub{color:rgba(20,23,26,.68) !important;}
+  .block-gold .btn-primary{background:#14171a !important;background:var(--ink) !important;color:var(--gold-bright) !important;}
+  .block-gold .btn-primary:hover{background:var(--ink-2) !important;}
+  .block-gold .btn-ghost{border-color:rgba(20,23,26,.32) !important;color:#14171a !important;color:var(--ink) !important;}
+  .block-gold .btn-ghost:hover{border-color:var(--teal-deep) !important;color:var(--teal-deep) !important;}
+  .block-gold .timecode{color:rgba(20,23,26,.55) !important;}
+  .block-gold .timecode .dot{background:#14171a !important;background:var(--ink) !important;}
+  .block-gold .hero-stats div{border-left-color:rgba(20,23,26,.25) !important;}
+  .block-gold .hero-stats b{color:var(--teal-deep) !important;}
+  .block-gold .hero-stats span{color:rgba(20,23,26,.55) !important;}
+  .block-gold .svc-card svg,.block-gold .highlight-list svg{color:var(--teal-deep) !important;}
+  .block-gold .svc-card{background:transparent !important;}
+  .block-gold .svc-card:hover{background:rgba(20,23,26,.05) !important;}
+  .block-gold .svc-card a{color:var(--teal-deep) !important;}
+  .block-gold .svc-grid{background:rgba(20,23,26,.15) !important;border-color:rgba(20,23,26,.15) !important;}
+  .cta-band.gold{background:#edd286 !important;background:var(--gold) !important;border-color:transparent !important;}
+  .cta-band.gold .sub{color:rgba(20,23,26,.68) !important;}
 
   .block-teal{background:var(--teal-deep);}
   .block-teal .accent{color:var(--gold-bright);}
