@@ -1709,7 +1709,11 @@ document.documentElement.classList.add('js-ready');
     {cat:"wedding",label:"Provincetown Elopement"},
     {cat:"real-estate",label:"South Coast Listing"},
     {cat:"portrait",label:"Family Portrait Session"},
-    {cat:"real-estate",label:"Real Estate Video Walkthrough",video:{id:"1212378018",h:"fd097482da"}}
+    {cat:"real-estate",label:"Real Estate Video Walkthrough",video:{id:"1212378018",h:"fd097482da"}},
+    {cat:"real-estate",label:"Tides End — Orleans, MA",video:{id:"1205603906"}},
+    {cat:"wedding",label:"Maria Elena + Issa",video:{id:"1140854497"}},
+    {cat:"wedding",label:"Chris + Yui — Boston, MA",video:{id:"1113969709"}},
+    {cat:"event",label:"Lobster Trap Oyster Bash — Bourne, MA",video:{id:"1129336572",h:"c6d4c6a233"}}
   ];
 
   var PLAY_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
@@ -1718,7 +1722,7 @@ document.documentElement.classList.add('js-ready');
     var meta = CATS[reel.cat];
     var grad = GRADIENTS[idx % GRADIENTS.length];
     var isVideo = !!reel.video;
-    var videoAttrs = isVideo ? ' data-vid="'+reel.video.id+'" data-vh="'+reel.video.h+'"' : '';
+    var videoAttrs = isVideo ? ' data-vid="'+reel.video.id+'" data-vh="'+(reel.video.h||'')+'"' : '';
     var videoClass = isVideo ? ' tile-video' : '';
     var playBtn = isVideo ? '<div class="tile-play">'+PLAY_ICON+'</div>' : '';
     var tag = isVideo ? '<span class="tile-tag-dot"></span>Play Reel' : meta.tag;
