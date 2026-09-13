@@ -1765,6 +1765,31 @@ document.documentElement.classList.add('js-ready');
     });
   })();
 
+  // ---------- video tile thumbnails (Vimeo oEmbed, washed with brand color) ----------
+  (function(){
+    var WASHES = [
+      'linear-gradient(135deg, color-mix(in srgb, var(--gold-deep) 55%, transparent), color-mix(in srgb, var(--ink) 82%, transparent) 70%)',
+      'linear-gradient(135deg, color-mix(in srgb, var(--teal-deep) 55%, transparent), color-mix(in srgb, var(--ink) 82%, transparent) 70%)',
+      'linear-gradient(160deg, color-mix(in srgb, var(--gold-deep) 45%, transparent), color-mix(in srgb, var(--teal-deep) 45%, transparent) 55%, color-mix(in srgb, var(--ink) 82%, transparent) 92%)'
+    ];
+    document.querySelectorAll('.tile[data-vid]').forEach(function(t, i){
+      var id = t.dataset.vid, h = t.dataset.vh;
+      var art = t.querySelector('.tile-art');
+      if(!art) return;
+      var srcUrl = 'https://vimeo.com/' + id + (h ? '/' + h : '');
+      fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(srcUrl))
+        .then(function(res){ if(!res.ok) throw new Error('oembed'); return res.json(); })
+        .then(function(data){
+          if(!data || !data.thumbnail_url) return;
+          var bigThumb = data.thumbnail_url.replace(/_\d+x\d+/, '_960x540');
+          art.style.backgroundImage = WASHES[i % WASHES.length] + ', url("' + bigThumb + '")';
+          art.style.backgroundSize = 'cover';
+          art.style.backgroundPosition = 'center';
+        })
+        .catch(function(){ /* keep the placeholder gradient — fail silently */ });
+    });
+  })();
+
   // ---------- journal (blog) ----------
   var POSTS = [
     {
