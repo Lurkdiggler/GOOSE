@@ -451,7 +451,14 @@
   .tile-meta{position:relative;z-index:1;padding:16px;width:100%;display:flex;justify-content:space-between;align-items:flex-end;}
   .tile-meta b{font-size:14px;font-weight:500;display:block;}
   .tile-meta small{font-size:10px;letter-spacing:.14em;color:var(--paper-faint);text-transform:uppercase;}
-  .tile-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-bright);border:1px solid rgba(237,210,134,.4);padding:4px 8px;border-radius:999px;}
+  .tile-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-bright);border:1px solid rgba(237,210,134,.4);padding:4px 8px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;}
+  .tile-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--gold-bright);animation:blink 1.6s ease-in-out infinite;flex-shrink:0;}
+
+  /* video tiles: italic accent title + deeper scrim for legibility over a real thumbnail */
+  .tile-video .tile-shade{background:linear-gradient(to top, rgba(10,11,12,.9) 0%, rgba(10,11,12,.15) 65%);}
+  .tile-video .tile-meta b{font-family:var(--font-accent);font-style:italic;font-weight:500;font-size:18px;letter-spacing:.005em;}
+  .tile-video .tile-meta small{color:var(--gold-bright);opacity:.9;}
+  .tile-video .tile-tag{background:rgba(10,11,12,.55);backdrop-filter:blur(4px);}
   .tile-icon{position:absolute;top:14px;left:14px;width:22px;height:22px;color:var(--paper-faint);z-index:1;opacity:.85;}
   .tile-play{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);z-index:1;
@@ -1711,10 +1718,12 @@ document.documentElement.classList.add('js-ready');
   function tile(reel, layoutClass, idx){
     var meta = CATS[reel.cat];
     var grad = GRADIENTS[idx % GRADIENTS.length];
-    var videoAttrs = reel.video ? ' data-vid="'+reel.video.id+'" data-vh="'+reel.video.h+'"' : '';
-    var playBtn = reel.video ? '<div class="tile-play">'+PLAY_ICON+'</div>' : '';
-    var tag = reel.video ? 'PLAY' : meta.tag;
-    return '<div class="tile '+layoutClass+'" data-cat="'+reel.cat+'"'+videoAttrs+'>'+
+    var isVideo = !!reel.video;
+    var videoAttrs = isVideo ? ' data-vid="'+reel.video.id+'" data-vh="'+reel.video.h+'"' : '';
+    var videoClass = isVideo ? ' tile-video' : '';
+    var playBtn = isVideo ? '<div class="tile-play">'+PLAY_ICON+'</div>' : '';
+    var tag = isVideo ? '<span class="tile-tag-dot"></span>Play Reel' : meta.tag;
+    return '<div class="tile '+layoutClass+videoClass+'" data-cat="'+reel.cat+'"'+videoAttrs+'>'+
       '<div class="tile-art" style="background:'+grad+';"></div>'+
       '<svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">'+meta.icon+'</svg>'+
       playBtn+
