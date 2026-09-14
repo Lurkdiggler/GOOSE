@@ -474,57 +474,20 @@
   .lightbox{
     position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;
     background:rgba(8,9,10,.92);opacity:0;visibility:hidden;padding:24px;
-    transition:opacity .25s ease,visibility .25s ease;
+    transition:opacity .3s ease,visibility .3s ease;
   }
   .lightbox.open{opacity:1;visibility:visible;}
   .lightbox-content{position:relative;width:min(1100px,100%);}
+
+  /* aperture-iris reveal: the frame opens as a circle from the point you clicked */
   .lightbox-inner{
     position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;
     box-shadow:0 30px 80px rgba(0,0,0,.6);
-    transform:scale(.9);opacity:0;filter:brightness(2.6) saturate(0);
-    transition:transform .38s cubic-bezier(.2,.8,.2,1),opacity .18s ease,filter .38s ease;
+    clip-path:circle(0% at var(--iris-x,50%) var(--iris-y,50%));
+    transition:clip-path .6s cubic-bezier(.65,0,.35,1);
   }
-  .lightbox.open .lightbox-inner{transform:scale(1);opacity:1;filter:brightness(1) saturate(1);}
+  .lightbox.open .lightbox-inner{clip-path:circle(145% at var(--iris-x,50%) var(--iris-y,50%));}
   .lightbox-inner iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
-
-  /* shutter-fire flash, timed to the open moment */
-  .lightbox-flash{position:absolute;inset:0;z-index:5;background:#f7f3ea;opacity:0;pointer-events:none;border-radius:8px;}
-  .lightbox.flashing .lightbox-flash{animation:lb-flash .45s ease forwards;}
-  @keyframes lb-flash{0%{opacity:.9;}100%{opacity:0;}}
-
-  /* brief scanline strobe while the "shutter" settles */
-  .lightbox-scan{
-    position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:8px;
-    background:repeating-linear-gradient(to bottom, rgba(255,255,255,.09) 0px, rgba(255,255,255,.09) 1px, transparent 1px, transparent 3px);
-    opacity:0;mix-blend-mode:overlay;
-  }
-  .lightbox.flashing .lightbox-scan{animation:lb-scan-strobe .4s steps(6) forwards;}
-  @keyframes lb-scan-strobe{
-    0%{opacity:.9;transform:translateY(-4%);}
-    30%{opacity:.15;transform:translateY(2%);}
-    55%{opacity:.7;transform:translateY(-1%);}
-    100%{opacity:0;transform:translateY(0);}
-  }
-
-  /* autofocus corner brackets that snap onto the frame as it locks in */
-  .lightbox-af{position:absolute;z-index:5;width:26px;height:26px;pointer-events:none;opacity:0;transform:scale(1.5);transition:opacity .3s ease .12s,transform .3s cubic-bezier(.2,.8,.2,1) .12s;}
-  .lightbox.open .lightbox-af{opacity:1;transform:scale(1);}
-  .lightbox-af span{position:absolute;width:100%;height:100%;border-color:var(--gold-bright);border-style:solid;}
-  .lightbox-af.af-tl{top:14px;left:14px;}.lightbox-af.af-tl span{border-width:2px 0 0 2px;}
-  .lightbox-af.af-tr{top:14px;right:14px;}.lightbox-af.af-tr span{border-width:2px 2px 0 0;}
-  .lightbox-af.af-bl{bottom:14px;left:14px;}.lightbox-af.af-bl span{border-width:0 0 2px 2px;}
-  .lightbox-af.af-br{bottom:14px;right:14px;}.lightbox-af.af-br span{border-width:0 2px 2px 0;}
-
-  /* REC / timecode HUD readout, echoing the homepage cover section */
-  .lightbox-hud{
-    position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:5;pointer-events:none;
-    display:flex;align-items:center;gap:14px;font-family:'Poppins',monospace;
-    opacity:0;transition:opacity .3s ease .28s;
-  }
-  .lightbox.open .lightbox-hud{opacity:1;}
-  .lightbox-hud-rec{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#e0837e;}
-  .lightbox-hud-rec .dot{width:6px;height:6px;border-radius:50%;background:#e0554f;animation:blink 1s ease-in-out infinite;}
-  .lightbox-hud-tc{font-size:10.5px;letter-spacing:.06em;color:var(--gold-bright);font-variant-numeric:tabular-nums;}
 
   .lightbox-close{
     position:absolute;top:-44px;right:0;background:none;border:0;cursor:pointer;color:var(--paper);
@@ -535,8 +498,7 @@
   .lightbox-close svg{width:18px;height:18px;}
   @media (max-width:640px){ .lightbox-close{top:-38px;} }
   @media (prefers-reduced-motion: reduce){
-    .lightbox-inner{transition:opacity .15s ease !important;transform:none !important;filter:none !important;}
-    .lightbox.flashing .lightbox-flash,.lightbox.flashing .lightbox-scan{animation:none !important;opacity:0 !important;}
+    .lightbox-inner{transition:opacity .15s ease !important;clip-path:none !important;}
   }
   .t-a{grid-column:span 4;}
   .t-b{grid-column:span 2;aspect-ratio:3/4;}
@@ -1663,18 +1625,8 @@
     <button type="button" class="lightbox-close" id="lightboxClose">Close
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
-    <div class="lightbox-hud">
-      <span class="lightbox-hud-rec"><span class="dot"></span>Rec</span>
-      <span class="lightbox-hud-tc" id="lightboxTc">00:00:00:00</span>
-    </div>
     <div class="lightbox-inner">
       <div id="lightboxFrame"></div>
-      <div class="lightbox-flash"></div>
-      <div class="lightbox-scan"></div>
-      <div class="lightbox-af af-tl"><span></span></div>
-      <div class="lightbox-af af-tr"><span></span></div>
-      <div class="lightbox-af af-bl"><span></span></div>
-      <div class="lightbox-af af-br"><span></span></div>
     </div>
   </div>
 </div>
@@ -1816,48 +1768,39 @@ document.documentElement.classList.add('js-ready');
   (function(){
     var lightbox = document.getElementById('videoLightbox');
     var lightboxFrame = document.getElementById('lightboxFrame');
+    var lightboxInner = lightbox ? lightbox.querySelector('.lightbox-inner') : null;
     var closeBtn = document.getElementById('lightboxClose');
-    var tcEl = document.getElementById('lightboxTc');
-    if(!lightbox || !lightboxFrame) return;
+    if(!lightbox || !lightboxFrame || !lightboxInner) return;
 
-    var tcTimer = null, flashTimer = null;
-    function startTc(){
-      var start = Date.now();
-      if(tcEl) tcEl.textContent = '00:00:00:00';
-      tcTimer = setInterval(function(){
-        if(!tcEl) return;
-        var ms = Date.now() - start;
-        var totalSec = Math.floor(ms / 1000);
-        var hh = String(Math.floor(totalSec / 3600)).padStart(2,'0');
-        var mm = String(Math.floor((totalSec % 3600) / 60)).padStart(2,'0');
-        var ss = String(totalSec % 60).padStart(2,'0');
-        var ff = String(Math.floor((ms % 1000) / 42)).padStart(2,'0'); // ~24fps "frame" tick
-        tcEl.textContent = hh + ':' + mm + ':' + ss + ':' + ff;
-      }, 42);
-    }
-    function stopTc(){
-      if(tcTimer){ clearInterval(tcTimer); tcTimer = null; }
+    function setIrisOrigin(evt){
+      // default to center; if we have a click point, open the iris from there
+      var ox = 50, oy = 50;
+      if(evt && typeof evt.clientX === 'number'){
+        var rect = lightboxInner.getBoundingClientRect();
+        if(rect.width && rect.height){
+          ox = ((evt.clientX - rect.left) / rect.width) * 100;
+          oy = ((evt.clientY - rect.top) / rect.height) * 100;
+        }
+      }
+      lightboxInner.style.setProperty('--iris-x', ox + '%');
+      lightboxInner.style.setProperty('--iris-y', oy + '%');
     }
 
-    function openVideo(id, h){
+    function openVideo(id, h, evt){
       var src = 'https://player.vimeo.com/video/' + id + (h ? '?h=' + h + '&autoplay=1' : '?autoplay=1');
       lightboxFrame.innerHTML = '<iframe src="' + src + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-      lightbox.classList.add('open','flashing');
+      setIrisOrigin(evt);
+      lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
-      startTc();
-      clearTimeout(flashTimer);
-      flashTimer = setTimeout(function(){ lightbox.classList.remove('flashing'); }, 450);
     }
     function closeVideo(){
-      lightbox.classList.remove('open','flashing');
-      clearTimeout(flashTimer);
-      stopTc();
+      lightbox.classList.remove('open');
       lightboxFrame.innerHTML = '';
       document.body.style.overflow = '';
     }
     document.addEventListener('click', function(e){
       var t = e.target.closest('.tile[data-vid]');
-      if(t){ openVideo(t.dataset.vid, t.dataset.vh); }
+      if(t){ openVideo(t.dataset.vid, t.dataset.vh, e); }
     });
     if(closeBtn) closeBtn.addEventListener('click', closeVideo);
     lightbox.addEventListener('click', function(e){
