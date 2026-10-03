@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0b0c">
-<meta name="color-scheme" content="dark">
-<meta name="description" content="The Goose Creative Media Co. — cinematic photo and video production studio on Cape Cod, MA.">
-<title>The Goose Creative Media Co.</title>
+<title>The Goose Creative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Bevan&display=swap">
 <style>
   /* ---- The Goose Creative — cinematic dark, single committed theme ---- */
   :root{
@@ -573,7 +573,7 @@
   .phase-visual.is-pinned{position:fixed;top:120px;}
   .phase-visual.is-parked{position:absolute;left:0;right:0;bottom:0;}
   .phase-graphic{width:100%;max-width:380px;height:auto;overflow:visible;}
-  .cam-layer{opacity:0;transform:translateY(10px) scale(.97);transform-origin:181px 125px;transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1);}
+  .cam-layer{opacity:0;transform:translateY(10px) scale(.97);transform-origin:160px 130px;transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1);}
   .phase-graphic.is-p1 .cam-layer[data-layer="1"],
   .phase-graphic.is-p2 .cam-layer[data-layer="1"],
   .phase-graphic.is-p2 .cam-layer[data-layer="2"],
@@ -582,31 +582,25 @@
   .phase-graphic.is-p3 .cam-layer[data-layer="3"],
   .phase-graphic.is-p4 .cam-layer{opacity:1;transform:none;}
 
-  .clap-board,.clap-arm,.clap-strip,.clap-win{fill:transparent;stroke:var(--paper-dim);stroke-width:2;transition:fill .6s ease,stroke .6s ease;}
-  .clap-hinge{fill:transparent;stroke:var(--paper-dim);stroke-width:2;transition:fill .6s ease,stroke .6s ease;}
-  .clap-stripes rect,.clap-text rect{fill:var(--paper-dim);opacity:.55;transition:fill .6s ease,opacity .6s ease;}
-  .clap-sprockets rect{fill:transparent;stroke:var(--paper-dim);stroke-width:1.4;transition:fill .6s ease,stroke .6s ease;}
-  .clap-wave-icon{fill:none;stroke:var(--paper-dim);opacity:0;transition:opacity .5s ease .2s;}
-  .clap-lens-icon,.clap-face-icon{fill:var(--paper-dim);opacity:0;transition:opacity .5s ease .2s,fill .6s ease;}
+  .lens-barrel{fill:transparent;stroke:var(--paper-dim);stroke-width:9;stroke-dasharray:2.5 4.2;transition:fill .6s ease,stroke .6s ease;}
+  .lens-ring{fill:none;stroke:var(--paper-dim);stroke-width:1;opacity:.5;}
+  .lens-glass{fill:url(#lensGlass);opacity:0;transition:opacity .6s ease;}
+  .lens-glass-hi{fill:var(--paper);opacity:0;transition:opacity .6s ease .1s;}
+  .lens-aperture{fill:none;stroke:var(--paper-dim);stroke-width:1.4;transition:stroke .6s ease;}
+  .lens-ticks line{stroke:var(--paper-dim);stroke-width:1.6;stroke-linecap:round;opacity:.85;}
+  .lens-scale-text{fill:var(--paper-dim);opacity:.7;letter-spacing:1px;transition:fill .6s ease,opacity .6s ease;}
+  .lens-index{fill:transparent;stroke:var(--paper-dim);stroke-width:1.4;transition:fill .6s ease,stroke .6s ease;}
   .cam-halo{fill:var(--gold);opacity:0;filter:blur(30px);transition:opacity .8s ease;}
-  .cam-badge-ring{fill:none;stroke:var(--gold-bright);stroke-width:2;opacity:0;transition:opacity .5s ease .15s;}
-  .cam-badge-check{fill:none;stroke:var(--gold-bright);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .5s ease .25s;}
+  .lens-logo{opacity:0;transform:scale(.7);transform-origin:160px 130px;transition:opacity .7s ease .15s,transform .7s cubic-bezier(.2,.8,.2,1) .15s;}
 
-  .phase-graphic.is-p4 .clap-board{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-arm{fill:var(--ink-2);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-stripes rect{fill:var(--gold-bright);opacity:1;}
-  .phase-graphic.is-p4 .clap-hinge{fill:var(--gold-bright);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-text rect{fill:var(--gold-bright);opacity:.9;}
-  .phase-graphic.is-p4 .clap-strip{fill:var(--ink-2);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-sprockets rect{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-win1{fill:var(--teal-deep);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-win2{fill:var(--gold-deep);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-win3{fill:#5c7a6e;stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .clap-wave-icon{stroke:var(--teal-bright);opacity:1;}
-  .phase-graphic.is-p4 .clap-lens-icon{fill:none;stroke:var(--ink);stroke-width:1.6;opacity:1;}
-  .phase-graphic.is-p4 .clap-face-icon{fill:var(--ink);opacity:1;}
+  .phase-graphic.is-p4 .lens-barrel{fill:var(--ink-3);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .lens-glass{opacity:1;}
+  .phase-graphic.is-p4 .lens-glass-hi{opacity:.22;}
+  .phase-graphic.is-p4 .lens-aperture{stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .lens-scale-text{fill:var(--gold-bright);opacity:1;}
+  .phase-graphic.is-p4 .lens-index{fill:var(--gold-bright);stroke:var(--gold-bright);}
   .phase-graphic.is-p4 .cam-halo{opacity:.14;}
-  .phase-graphic.is-p4 .cam-badge-ring,.phase-graphic.is-p4 .cam-badge-check{opacity:1;}
+  .phase-graphic.is-p4 .lens-logo{opacity:1;transform:scale(1);}
 
   .phase-steps{display:flex;flex-direction:column;}
   .phase-step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding:24px 0;opacity:.32;transition:opacity .45s ease;border-top:1px solid var(--line-strong);}
@@ -626,21 +620,14 @@
     .phase-visual{position:static !important;height:auto !important;margin:0 0 32px;}
     .phase-graphic{max-width:220px;margin:0 auto;}
     .cam-layer{opacity:1 !important;transform:none !important;}
-    .clap-board{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
-    .clap-arm{fill:var(--ink-2) !important;stroke:var(--gold-bright) !important;}
-    .clap-stripes rect{fill:var(--gold-bright) !important;opacity:1 !important;}
-    .clap-hinge{fill:var(--gold-bright) !important;stroke:var(--gold-bright) !important;}
-    .clap-text rect{fill:var(--gold-bright) !important;opacity:.9 !important;}
-    .clap-strip{fill:var(--ink-2) !important;stroke:var(--gold-bright) !important;}
-    .clap-sprockets rect{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
-    .clap-win1{fill:var(--teal-deep) !important;stroke:var(--gold-bright) !important;}
-    .clap-win2{fill:var(--gold-deep) !important;stroke:var(--gold-bright) !important;}
-    .clap-win3{fill:#5c7a6e !important;stroke:var(--gold-bright) !important;}
-    .clap-wave-icon{stroke:var(--teal-bright) !important;opacity:1 !important;}
-    .clap-lens-icon{fill:none !important;stroke:var(--ink) !important;opacity:1 !important;}
-    .clap-face-icon{fill:var(--ink) !important;opacity:1 !important;}
+    .lens-barrel{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
+    .lens-glass{opacity:1 !important;}
+    .lens-glass-hi{opacity:.22 !important;}
+    .lens-aperture{stroke:var(--gold-bright) !important;}
+    .lens-scale-text{fill:var(--gold-bright) !important;opacity:1 !important;}
+    .lens-index{fill:var(--gold-bright) !important;stroke:var(--gold-bright) !important;}
     .cam-halo{opacity:.14 !important;}
-    .cam-badge-ring,.cam-badge-check{opacity:1 !important;}
+    .lens-logo{opacity:1 !important;transform:scale(1) !important;}
     .phase-steps{display:flex;flex-direction:column;}
     .phase-step{min-height:auto !important;opacity:1 !important;padding:16px 0;}
     .phase-step h4{font-size:18px;}
@@ -1159,56 +1146,48 @@
           <div class="phase-visual-col">
           <div class="phase-visual">
             <svg class="phase-graphic" id="phaseGraphic" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle class="cam-halo" cx="181" cy="125" r="150"></circle>
+              <defs>
+                <radialGradient id="lensGlass" cx="38%" cy="32%" r="75%">
+                  <stop offset="0%" stop-color="var(--teal-bright)"></stop>
+                  <stop offset="55%" stop-color="var(--teal-deep)"></stop>
+                  <stop offset="100%" stop-color="var(--ink-3)"></stop>
+                </radialGradient>
+                <clipPath id="lensLogoClip">
+                  <circle cx="160" cy="130" r="48"></circle>
+                </clipPath>
+              </defs>
+
+              <circle class="cam-halo" cx="160" cy="130" r="150"></circle>
 
               <g class="cam-layer" data-layer="1">
-                <rect class="clap-board" x="70" y="120" width="150" height="90" rx="6"></rect>
+                <circle class="lens-barrel" cx="160" cy="130" r="90"></circle>
               </g>
 
               <g class="cam-layer" data-layer="2">
-                <g transform="rotate(-8 70 118)">
-                  <rect class="clap-arm" x="70" y="92" width="150" height="26" rx="4"></rect>
-                  <g class="clap-stripes">
-                    <rect x="78" y="96" width="10" height="18"></rect>
-                    <rect x="96" y="96" width="10" height="18"></rect>
-                    <rect x="114" y="96" width="10" height="18"></rect>
-                    <rect x="132" y="96" width="10" height="18"></rect>
-                    <rect x="150" y="96" width="10" height="18"></rect>
-                    <rect x="168" y="96" width="10" height="18"></rect>
-                    <rect x="186" y="96" width="10" height="18"></rect>
-                    <rect x="204" y="96" width="10" height="18"></rect>
-                  </g>
-                </g>
-                <circle class="clap-hinge" cx="72" cy="120" r="5"></circle>
+                <circle class="lens-ring" cx="160" cy="130" r="70"></circle>
               </g>
 
               <g class="cam-layer" data-layer="3">
-                <g class="clap-text">
-                  <rect x="84" y="140" width="40" height="5"></rect>
-                  <rect x="84" y="152" width="70" height="5"></rect>
-                  <rect x="84" y="164" width="30" height="5"></rect>
+                <path class="lens-aperture" d="M160,112 L177,121 L177,139 L160,148 L143,139 L143,121 Z"></path>
+                <g class="lens-ticks">
+                  <line x1="94.2" y1="153.9" x2="100.6" y2="149.4"></line>
+                  <line x1="109.1" y1="178.0" x2="116.7" y2="174.6"></line>
+                  <line x1="132.3" y1="194.3" x2="137.0" y2="186.8"></line>
+                  <line x1="160.0" y1="200.0" x2="160.0" y2="191.0"></line>
+                  <line x1="187.7" y1="194.3" x2="183.0" y2="186.8"></line>
+                  <line x1="210.9" y1="178.0" x2="203.3" y2="174.6"></line>
+                  <line x1="225.8" y1="153.9" x2="219.4" y2="149.4"></line>
                 </g>
-                <rect class="clap-strip" x="238" y="60" width="54" height="150" rx="4"></rect>
-                <g class="clap-sprockets">
-                  <rect x="245" y="70" width="8" height="8"></rect><rect x="277" y="70" width="8" height="8"></rect>
-                  <rect x="245" y="94" width="8" height="8"></rect><rect x="277" y="94" width="8" height="8"></rect>
-                  <rect x="245" y="118" width="8" height="8"></rect><rect x="277" y="118" width="8" height="8"></rect>
-                  <rect x="245" y="142" width="8" height="8"></rect><rect x="277" y="142" width="8" height="8"></rect>
-                  <rect x="245" y="166" width="8" height="8"></rect><rect x="277" y="166" width="8" height="8"></rect>
-                  <rect x="245" y="190" width="8" height="8"></rect><rect x="277" y="190" width="8" height="8"></rect>
-                </g>
-                <rect class="clap-win clap-win1" x="257" y="76" width="18" height="34" rx="2"></rect>
-                <rect class="clap-win clap-win2" x="257" y="124" width="18" height="34" rx="2"></rect>
-                <rect class="clap-win clap-win3" x="257" y="172" width="18" height="34" rx="2"></rect>
+                <text class="lens-scale-text" x="160" y="213" text-anchor="middle" font-size="9">1M · 3 · 10 · ∞</text>
+                <path class="lens-index" d="M160 185 L155 176 L165 176 Z"></path>
               </g>
 
               <g class="cam-deliver">
-                <path class="clap-wave-icon" d="M260 104 l5 -14 4 8 4 -18 4 24" stroke-width="1.6"></path>
-                <circle class="clap-lens-icon" cx="266" cy="141" r="7"></circle>
-                <circle class="clap-face-icon" cx="262" cy="196" r="3"></circle>
-                <circle class="clap-face-icon" cx="270" cy="190" r="2"></circle>
-                <circle class="cam-badge-ring" cx="300" cy="46" r="14"></circle>
-                <path class="cam-badge-check" d="M294 46 L298 50 L307 40"></path>
+                <circle class="lens-glass" cx="160" cy="130" r="55"></circle>
+                <g class="lens-logo" clip-path="url(#lensLogoClip)">
+                  <image id="lensLogoImg" x="112" y="98" width="96" height="64" preserveAspectRatio="xMidYMid meet"></image>
+                </g>
+                <circle class="lens-glass-hi" cx="146" cy="112" r="12"></circle>
               </g>
             </svg>
           </div>
@@ -2292,6 +2271,16 @@ document.documentElement.classList.add('js-ready');
     var col = scroller.querySelector('.phase-visual-col');
     var visual = scroller.querySelector('.phase-visual');
     var steps = scroller.querySelectorAll('.phase-step');
+
+    // Reuse the real brand mark already embedded in the nav (.brand-mark img)
+    // instead of duplicating the base64 logo a second time in this SVG.
+    var lensLogoImg = graphic.querySelector('#lensLogoImg');
+    var brandMarkImg = document.querySelector('.brand-mark img');
+    if(lensLogoImg && brandMarkImg && brandMarkImg.src){
+      lensLogoImg.setAttribute('href', brandMarkImg.src);
+      lensLogoImg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', brandMarkImg.src);
+    }
+
     function setPhase(n){
       graphic.classList.remove('is-p1','is-p2','is-p3','is-p4');
       for(var i=1;i<=n;i++){ graphic.classList.add('is-p'+i); }
