@@ -573,7 +573,7 @@
   .phase-visual.is-pinned{position:fixed;top:120px;}
   .phase-visual.is-parked{position:absolute;left:0;right:0;bottom:0;}
   .phase-graphic{width:100%;max-width:380px;height:auto;overflow:visible;}
-  .cam-layer{opacity:0;transform:translateY(10px) scale(.97);transform-origin:170px 120px;transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1);}
+  .cam-layer{opacity:0;transform:translateY(10px) scale(.97);transform-origin:181px 125px;transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1);}
   .phase-graphic.is-p1 .cam-layer[data-layer="1"],
   .phase-graphic.is-p2 .cam-layer[data-layer="1"],
   .phase-graphic.is-p2 .cam-layer[data-layer="2"],
@@ -582,29 +582,29 @@
   .phase-graphic.is-p3 .cam-layer[data-layer="3"],
   .phase-graphic.is-p4 .cam-layer{opacity:1;transform:none;}
 
-  .cam-base,.cam-body,.cam-deck,.cam-grip,.cam-mic,.cam-monitor{fill:transparent;stroke:var(--paper-dim);stroke-width:2;transition:fill .6s ease,stroke .6s ease;}
-  .cam-lens-outer,.cam-lens-mid,.cam-lens-inner,.cam-tally,.cam-glint,.cam-playhead{fill:transparent;stroke:var(--paper-dim);stroke-width:2;transition:fill .6s ease,stroke .6s ease;}
-  .cam-mic-arm,.cam-arm{stroke:var(--paper-dim);stroke-width:2;transition:stroke .6s ease;}
-  .cam-wave rect{fill:var(--paper-dim);opacity:.55;transition:fill .6s ease,opacity .6s ease;}
-  .cam-monitor-play{fill:var(--paper-dim);opacity:.7;transition:fill .6s ease,opacity .6s ease;}
+  .clap-board,.clap-arm,.clap-strip,.clap-win{fill:transparent;stroke:var(--paper-dim);stroke-width:2;transition:fill .6s ease,stroke .6s ease;}
+  .clap-hinge{fill:transparent;stroke:var(--paper-dim);stroke-width:2;transition:fill .6s ease,stroke .6s ease;}
+  .clap-stripes rect,.clap-text rect{fill:var(--paper-dim);opacity:.55;transition:fill .6s ease,opacity .6s ease;}
+  .clap-sprockets rect{fill:transparent;stroke:var(--paper-dim);stroke-width:1.4;transition:fill .6s ease,stroke .6s ease;}
+  .clap-wave-icon{fill:none;stroke:var(--paper-dim);opacity:0;transition:opacity .5s ease .2s;}
+  .clap-lens-icon,.clap-face-icon{fill:var(--paper-dim);opacity:0;transition:opacity .5s ease .2s,fill .6s ease;}
   .cam-halo{fill:var(--gold);opacity:0;filter:blur(30px);transition:opacity .8s ease;}
   .cam-badge-ring{fill:none;stroke:var(--gold-bright);stroke-width:2;opacity:0;transition:opacity .5s ease .15s;}
   .cam-badge-check{fill:none;stroke:var(--gold-bright);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .5s ease .25s;}
 
-  .phase-graphic.is-p4 .cam-base{fill:var(--gold-deep);stroke:var(--gold-deep);}
-  .phase-graphic.is-p4 .cam-body{fill:var(--ink-2);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-deck{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-grip{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-mic{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-lens-outer{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-lens-mid{fill:var(--teal-deep);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-lens-inner{fill:var(--ink);stroke:var(--teal-bright);}
-  .phase-graphic.is-p4 .cam-glint{fill:var(--paper);stroke:none;opacity:.9;}
-  .phase-graphic.is-p4 .cam-tally{fill:#e8604a;stroke:#e8604a;opacity:1;}
-  .phase-graphic.is-p4 .cam-monitor{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-monitor-play{fill:var(--gold-bright);opacity:1;}
-  .phase-graphic.is-p4 .cam-wave rect{fill:var(--gold-bright);opacity:.9;}
-  .phase-graphic.is-p4 .cam-playhead{fill:var(--gold-bright);stroke:var(--gold-bright);opacity:1;}
+  .phase-graphic.is-p4 .clap-board{fill:var(--ink-3);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-arm{fill:var(--ink-2);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-stripes rect{fill:var(--gold-bright);opacity:1;}
+  .phase-graphic.is-p4 .clap-hinge{fill:var(--gold-bright);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-text rect{fill:var(--gold-bright);opacity:.9;}
+  .phase-graphic.is-p4 .clap-strip{fill:var(--ink-2);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-sprockets rect{fill:var(--ink-3);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-win1{fill:var(--teal-deep);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-win2{fill:var(--gold-deep);stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-win3{fill:#5c7a6e;stroke:var(--gold-bright);}
+  .phase-graphic.is-p4 .clap-wave-icon{stroke:var(--teal-bright);opacity:1;}
+  .phase-graphic.is-p4 .clap-lens-icon{fill:none;stroke:var(--ink);stroke-width:1.6;opacity:1;}
+  .phase-graphic.is-p4 .clap-face-icon{fill:var(--ink);opacity:1;}
   .phase-graphic.is-p4 .cam-halo{opacity:.14;}
   .phase-graphic.is-p4 .cam-badge-ring,.phase-graphic.is-p4 .cam-badge-check{opacity:1;}
 
@@ -626,15 +626,19 @@
     .phase-visual{position:static !important;height:auto !important;margin:0 0 32px;}
     .phase-graphic{max-width:220px;margin:0 auto;}
     .cam-layer{opacity:1 !important;transform:none !important;}
-    .cam-base,.cam-body,.cam-deck,.cam-grip,.cam-mic,.cam-monitor{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
-    .cam-lens-outer{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
-    .cam-lens-mid{fill:var(--teal-deep) !important;stroke:var(--gold-bright) !important;}
-    .cam-lens-inner{fill:var(--ink) !important;stroke:var(--teal-bright) !important;}
-    .cam-glint{fill:var(--paper) !important;stroke:none !important;opacity:.9 !important;}
-    .cam-tally{fill:#e8604a !important;stroke:#e8604a !important;opacity:1 !important;}
-    .cam-monitor-play{fill:var(--gold-bright) !important;opacity:1 !important;}
-    .cam-wave rect{fill:var(--gold-bright) !important;opacity:.9 !important;}
-    .cam-playhead{fill:var(--gold-bright) !important;stroke:var(--gold-bright) !important;opacity:1 !important;}
+    .clap-board{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
+    .clap-arm{fill:var(--ink-2) !important;stroke:var(--gold-bright) !important;}
+    .clap-stripes rect{fill:var(--gold-bright) !important;opacity:1 !important;}
+    .clap-hinge{fill:var(--gold-bright) !important;stroke:var(--gold-bright) !important;}
+    .clap-text rect{fill:var(--gold-bright) !important;opacity:.9 !important;}
+    .clap-strip{fill:var(--ink-2) !important;stroke:var(--gold-bright) !important;}
+    .clap-sprockets rect{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
+    .clap-win1{fill:var(--teal-deep) !important;stroke:var(--gold-bright) !important;}
+    .clap-win2{fill:var(--gold-deep) !important;stroke:var(--gold-bright) !important;}
+    .clap-win3{fill:#5c7a6e !important;stroke:var(--gold-bright) !important;}
+    .clap-wave-icon{stroke:var(--teal-bright) !important;opacity:1 !important;}
+    .clap-lens-icon{fill:none !important;stroke:var(--ink) !important;opacity:1 !important;}
+    .clap-face-icon{fill:var(--ink) !important;opacity:1 !important;}
     .cam-halo{opacity:.14 !important;}
     .cam-badge-ring,.cam-badge-check{opacity:1 !important;}
     .phase-steps{display:flex;flex-direction:column;}
@@ -1155,49 +1159,56 @@
           <div class="phase-visual-col">
           <div class="phase-visual">
             <svg class="phase-graphic" id="phaseGraphic" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle class="cam-halo" cx="170" cy="120" r="150"></circle>
+              <circle class="cam-halo" cx="181" cy="125" r="150"></circle>
 
               <g class="cam-layer" data-layer="1">
-                <rect class="cam-base" x="92" y="168" width="188" height="12" rx="4"></rect>
-                <rect class="cam-body" x="112" y="70" width="150" height="100" rx="14"></rect>
-                <rect class="cam-deck" x="152" y="48" width="64" height="24" rx="6"></rect>
+                <rect class="clap-board" x="70" y="120" width="150" height="90" rx="6"></rect>
               </g>
 
               <g class="cam-layer" data-layer="2">
-                <circle class="cam-lens-outer" cx="96" cy="120" r="42"></circle>
-                <circle class="cam-lens-mid" cx="96" cy="120" r="27"></circle>
-                <circle class="cam-lens-inner" cx="96" cy="120" r="11"></circle>
-                <circle class="cam-glint" cx="87" cy="109" r="3.4"></circle>
-                <rect class="cam-grip" x="255" y="92" width="14" height="52" rx="5"></rect>
-                <rect class="cam-mic" x="162" y="18" width="20" height="14" rx="4"></rect>
-                <line class="cam-mic-arm" x1="172" y1="32" x2="172" y2="48"></line>
-                <circle class="cam-tally" cx="246" cy="84" r="5"></circle>
+                <g transform="rotate(-8 70 118)">
+                  <rect class="clap-arm" x="70" y="92" width="150" height="26" rx="4"></rect>
+                  <g class="clap-stripes">
+                    <rect x="78" y="96" width="10" height="18"></rect>
+                    <rect x="96" y="96" width="10" height="18"></rect>
+                    <rect x="114" y="96" width="10" height="18"></rect>
+                    <rect x="132" y="96" width="10" height="18"></rect>
+                    <rect x="150" y="96" width="10" height="18"></rect>
+                    <rect x="168" y="96" width="10" height="18"></rect>
+                    <rect x="186" y="96" width="10" height="18"></rect>
+                    <rect x="204" y="96" width="10" height="18"></rect>
+                  </g>
+                </g>
+                <circle class="clap-hinge" cx="72" cy="120" r="5"></circle>
               </g>
 
               <g class="cam-layer" data-layer="3">
-                <line class="cam-arm" x1="262" y1="104" x2="292" y2="122"></line>
-                <rect class="cam-monitor" x="288" y="120" width="46" height="34" rx="4"></rect>
-                <path class="cam-monitor-play" d="M304 130 L304 144 L317 137 Z"></path>
-                <g class="cam-wave">
-                  <rect x="108" y="200" width="6" height="14"></rect>
-                  <rect x="120" y="192" width="6" height="22"></rect>
-                  <rect x="132" y="198" width="6" height="16"></rect>
-                  <rect x="144" y="186" width="6" height="28"></rect>
-                  <rect x="156" y="196" width="6" height="18"></rect>
-                  <rect x="168" y="190" width="6" height="24"></rect>
-                  <rect x="180" y="200" width="6" height="14"></rect>
-                  <rect x="192" y="194" width="6" height="20"></rect>
-                  <rect x="204" y="198" width="6" height="16"></rect>
-                  <rect x="216" y="188" width="6" height="26"></rect>
-                  <rect x="228" y="200" width="6" height="14"></rect>
-                  <rect x="240" y="194" width="6" height="20"></rect>
+                <g class="clap-text">
+                  <rect x="84" y="140" width="40" height="5"></rect>
+                  <rect x="84" y="152" width="70" height="5"></rect>
+                  <rect x="84" y="164" width="30" height="5"></rect>
                 </g>
-                <circle class="cam-playhead" cx="150" cy="188" r="3.4"></circle>
+                <rect class="clap-strip" x="238" y="60" width="54" height="150" rx="4"></rect>
+                <g class="clap-sprockets">
+                  <rect x="245" y="70" width="8" height="8"></rect><rect x="277" y="70" width="8" height="8"></rect>
+                  <rect x="245" y="94" width="8" height="8"></rect><rect x="277" y="94" width="8" height="8"></rect>
+                  <rect x="245" y="118" width="8" height="8"></rect><rect x="277" y="118" width="8" height="8"></rect>
+                  <rect x="245" y="142" width="8" height="8"></rect><rect x="277" y="142" width="8" height="8"></rect>
+                  <rect x="245" y="166" width="8" height="8"></rect><rect x="277" y="166" width="8" height="8"></rect>
+                  <rect x="245" y="190" width="8" height="8"></rect><rect x="277" y="190" width="8" height="8"></rect>
+                </g>
+                <rect class="clap-win clap-win1" x="257" y="76" width="18" height="34" rx="2"></rect>
+                <rect class="clap-win clap-win2" x="257" y="124" width="18" height="34" rx="2"></rect>
+                <rect class="clap-win clap-win3" x="257" y="172" width="18" height="34" rx="2"></rect>
               </g>
 
               <g class="cam-deliver">
-                <circle class="cam-badge-ring" cx="258" cy="72" r="16"></circle>
-                <path class="cam-badge-check" d="M251 72 L256 77 L266 66"></path>
+                <path class="clap-wave-icon" d="M260 104 l5 -14 4 8 4 -18 4 24" stroke-width="1.6"></path>
+                <circle class="clap-lens-icon" cx="266" cy="141" r="7"></circle>
+                <circle class="clap-face-icon" cx="262" cy="196" r="3"></circle>
+                <circle class="clap-face-icon" cx="270" cy="190" r="2"></circle>
+                <circle class="cam-badge-ring" cx="300" cy="46" r="14"></circle>
+                <path class="cam-badge-check" d="M294 46 L298 50 L307 40"></path>
               </g>
             </svg>
           </div>
