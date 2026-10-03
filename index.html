@@ -573,34 +573,21 @@
   .phase-visual.is-pinned{position:fixed;top:120px;}
   .phase-visual.is-parked{position:absolute;left:0;right:0;bottom:0;}
   .phase-graphic{width:100%;max-width:380px;height:auto;overflow:visible;}
-  .cam-layer{opacity:0;transform:translateY(10px) scale(.97);transform-origin:160px 130px;transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1);}
-  .phase-graphic.is-p1 .cam-layer[data-layer="1"],
-  .phase-graphic.is-p2 .cam-layer[data-layer="1"],
-  .phase-graphic.is-p2 .cam-layer[data-layer="2"],
-  .phase-graphic.is-p3 .cam-layer[data-layer="1"],
-  .phase-graphic.is-p3 .cam-layer[data-layer="2"],
-  .phase-graphic.is-p3 .cam-layer[data-layer="3"],
-  .phase-graphic.is-p4 .cam-layer{opacity:1;transform:none;}
+  .cam-halo{fill:var(--gold);opacity:.12;filter:blur(30px);}
 
-  .lens-barrel{fill:transparent;stroke:var(--paper-dim);stroke-width:9;stroke-dasharray:2.5 4.2;transition:fill .6s ease,stroke .6s ease;}
-  .lens-ring{fill:none;stroke:var(--paper-dim);stroke-width:1;opacity:.5;}
-  .lens-glass{fill:url(#lensGlass);opacity:0;transition:opacity .6s ease;}
-  .lens-glass-hi{fill:var(--paper);opacity:0;transition:opacity .6s ease .1s;}
-  .lens-aperture{fill:none;stroke:var(--paper-dim);stroke-width:1.4;transition:stroke .6s ease;}
-  .lens-ticks line{stroke:var(--paper-dim);stroke-width:1.6;stroke-linecap:round;opacity:.85;}
-  .lens-scale-text{fill:var(--paper-dim);opacity:.7;letter-spacing:1px;transition:fill .6s ease,opacity .6s ease;}
-  .lens-index{fill:transparent;stroke:var(--paper-dim);stroke-width:1.4;transition:fill .6s ease,stroke .6s ease;}
-  .cam-halo{fill:var(--gold);opacity:0;filter:blur(30px);transition:opacity .8s ease;}
-  .lens-logo{opacity:0;transform:scale(.7);transform-origin:160px 130px;transition:opacity .7s ease .15s,transform .7s cubic-bezier(.2,.8,.2,1) .15s;}
+  /* Mascot cross-fade: unlike the earlier concepts, each phase is a fully
+     separate, fully colored scene — so only one .mascot-scene is ever shown.
+     setPhase() in JS sets a single exclusive is-pN class (not cumulative)
+     for this reason. */
+  .mascot-scene{opacity:0;transform:translateY(8px) scale(.97);transform-origin:160px 130px;transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
+  .phase-graphic.is-p1 .mascot-scene[data-scene="1"],
+  .phase-graphic.is-p2 .mascot-scene[data-scene="2"],
+  .phase-graphic.is-p3 .mascot-scene[data-scene="3"],
+  .phase-graphic.is-p4 .mascot-scene[data-scene="4"]{opacity:1;transform:none;}
 
-  .phase-graphic.is-p4 .lens-barrel{fill:var(--ink-3);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .lens-glass{opacity:1;}
-  .phase-graphic.is-p4 .lens-glass-hi{opacity:.22;}
-  .phase-graphic.is-p4 .lens-aperture{stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .lens-scale-text{fill:var(--gold-bright);opacity:1;}
-  .phase-graphic.is-p4 .lens-index{fill:var(--gold-bright);stroke:var(--gold-bright);}
-  .phase-graphic.is-p4 .cam-halo{opacity:.14;}
-  .phase-graphic.is-p4 .lens-logo{opacity:1;transform:scale(1);}
+  /* Mobile doesn't pin/scroll-swap (see note below), so each step instead
+     gets its own small static copy of its scene, duplicated by JS at load. */
+  .phase-step-art{display:none;}
 
   .phase-steps{display:flex;flex-direction:column;}
   .phase-step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding:24px 0;opacity:.32;transition:opacity .45s ease;border-top:1px solid var(--line-strong);}
@@ -617,24 +604,15 @@
      dependency, so it always shows. !important is scoped to this one component. */
   @media (max-width:880px){
     .phase-scroller{display:block;margin-top:0;}
-    .phase-visual{position:static !important;height:auto !important;margin:0 0 32px;}
-    .phase-graphic{max-width:220px;margin:0 auto;}
-    .cam-layer{opacity:1 !important;transform:none !important;}
-    .lens-barrel{fill:var(--ink-3) !important;stroke:var(--gold-bright) !important;}
-    .lens-glass{opacity:1 !important;}
-    .lens-glass-hi{opacity:.22 !important;}
-    .lens-aperture{stroke:var(--gold-bright) !important;}
-    .lens-scale-text{fill:var(--gold-bright) !important;opacity:1 !important;}
-    .lens-index{fill:var(--gold-bright) !important;stroke:var(--gold-bright) !important;}
-    .cam-halo{opacity:.14 !important;}
-    .lens-logo{opacity:1 !important;transform:scale(1) !important;}
+    /* The shared pinned graphic only makes sense on desktop, where it can
+       stay in view while you scroll past all four steps. On mobile each
+       step carries its own small static copy instead (.phase-step-art). */
+    .phase-visual-col{display:none;}
+    .phase-step-art{display:block;width:120px;height:auto;margin:0 0 18px;overflow:visible;}
     .phase-steps{display:flex;flex-direction:column;}
     .phase-step{min-height:auto !important;opacity:1 !important;padding:16px 0;}
     .phase-step h4{font-size:18px;}
     .phase-num{font-size:26px;}
-  }
-  @media (max-width:520px){
-    .phase-graphic{max-width:180px;}
   }
 
   /* ---------- split (about) ---------- */
@@ -1146,48 +1124,96 @@
           <div class="phase-visual-col">
           <div class="phase-visual">
             <svg class="phase-graphic" id="phaseGraphic" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <radialGradient id="lensGlass" cx="38%" cy="32%" r="75%">
-                  <stop offset="0%" stop-color="var(--teal-bright)"></stop>
-                  <stop offset="55%" stop-color="var(--teal-deep)"></stop>
-                  <stop offset="100%" stop-color="var(--ink-3)"></stop>
-                </radialGradient>
-                <clipPath id="lensLogoClip">
-                  <circle cx="160" cy="130" r="48"></circle>
-                </clipPath>
-              </defs>
-
               <circle class="cam-halo" cx="160" cy="130" r="150"></circle>
 
-              <g class="cam-layer" data-layer="1">
-                <circle class="lens-barrel" cx="160" cy="130" r="90"></circle>
+              <!-- 01 Consult: goose at a laptop -->
+              <g class="mascot-scene" data-scene="1">
+                <rect x="80" y="118" width="78" height="58" rx="5" fill="var(--ink-3)" stroke="var(--gold-bright)" stroke-width="2"></rect>
+                <path d="M72,176 L166,176 L174,186 L64,186 Z" fill="var(--ink-3)" stroke="var(--gold-bright)" stroke-width="2" stroke-linejoin="round"></path>
+                <circle cx="94" cy="132" r="5" fill="var(--teal-bright)"></circle>
+                <rect x="106" y="129" width="42" height="4" rx="2" fill="var(--gold-bright)" opacity=".9"></rect>
+                <rect x="94" y="146" width="56" height="3" rx="1.5" fill="var(--paper)" opacity=".5"></rect>
+                <rect x="94" y="154" width="44" height="3" rx="1.5" fill="var(--paper)" opacity=".45"></rect>
+                <rect x="94" y="162" width="50" height="3" rx="1.5" fill="var(--paper)" opacity=".45"></rect>
+                <path d="M214,184 Q212,196 206,200" stroke="var(--ink-2)" stroke-width="3" fill="none" stroke-linecap="round"></path>
+                <path d="M234,184 Q238,196 244,200" stroke="var(--ink-2)" stroke-width="3" fill="none" stroke-linecap="round"></path>
+                <ellipse cx="228" cy="168" rx="44" ry="18" transform="rotate(8 228 168)" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></ellipse>
+                <path d="M266,162 L284,152 L270,176 Z" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="M208,152 Q224,138 244,150 Q226,164 206,166 Z" fill="var(--teal-bright)" stroke="var(--ink-2)" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="M198,160 Q180,138 178,115" stroke="var(--ink-2)" stroke-width="14" fill="none" stroke-linecap="round"></path>
+                <path d="M198,160 Q180,138 178,115" stroke="var(--gold-bright)" stroke-width="8" fill="none" stroke-linecap="round"></path>
+                <circle cx="176" cy="112" r="11" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></circle>
+                <path d="M166,110 L148,114 L166,119 Z" fill="var(--ink-2)"></path>
+                <circle cx="172" cy="109" r="1.8" fill="var(--ink)"></circle>
               </g>
 
-              <g class="cam-layer" data-layer="2">
-                <circle class="lens-ring" cx="160" cy="130" r="70"></circle>
+              <!-- 02 Shoot: goose behind the camera -->
+              <g class="mascot-scene" data-scene="2">
+                <path d="M226,210 L198,152" stroke="var(--ink-2)" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M226,210 L226,148" stroke="var(--ink-2)" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M226,210 L254,152" stroke="var(--ink-2)" stroke-width="3" stroke-linecap="round"></path>
+                <rect x="200" y="118" width="52" height="34" rx="6" fill="var(--ink-3)" stroke="var(--gold-bright)" stroke-width="2"></rect>
+                <rect x="218" y="110" width="16" height="8" rx="1.5" fill="var(--gold-bright)"></rect>
+                <circle cx="226" cy="135" r="12" fill="none" stroke="var(--gold-bright)" stroke-width="2.5"></circle>
+                <circle cx="226" cy="135" r="6" fill="var(--teal-bright)"></circle>
+                <path d="M106,182 L102,206" stroke="var(--ink-2)" stroke-width="4" stroke-linecap="round"></path>
+                <path d="M134,182 L140,206" stroke="var(--ink-2)" stroke-width="4" stroke-linecap="round"></path>
+                <path d="M96,206 L108,206" stroke="var(--ink-2)" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M134,206 L146,206" stroke="var(--ink-2)" stroke-width="3" stroke-linecap="round"></path>
+                <ellipse cx="120" cy="166" rx="44" ry="18" transform="rotate(-6 120 166)" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></ellipse>
+                <path d="M82,160 L64,150 L78,174 Z" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="M142,150 Q162,136 184,146 Q164,160 142,164 Z" fill="var(--teal-bright)" stroke="var(--ink-2)" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="M150,158 Q168,136 172,113" stroke="var(--ink-2)" stroke-width="14" fill="none" stroke-linecap="round"></path>
+                <path d="M150,158 Q168,136 172,113" stroke="var(--gold-bright)" stroke-width="8" fill="none" stroke-linecap="round"></path>
+                <circle cx="174" cy="110" r="11" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></circle>
+                <path d="M184,108 L202,112 L184,117 Z" fill="var(--ink-2)"></path>
+                <circle cx="178" cy="107" r="1.8" fill="var(--ink)"></circle>
               </g>
 
-              <g class="cam-layer" data-layer="3">
-                <path class="lens-aperture" d="M160,112 L177,121 L177,139 L160,148 L143,139 L143,121 Z"></path>
-                <g class="lens-ticks">
-                  <line x1="94.2" y1="153.9" x2="100.6" y2="149.4"></line>
-                  <line x1="109.1" y1="178.0" x2="116.7" y2="174.6"></line>
-                  <line x1="132.3" y1="194.3" x2="137.0" y2="186.8"></line>
-                  <line x1="160.0" y1="200.0" x2="160.0" y2="191.0"></line>
-                  <line x1="187.7" y1="194.3" x2="183.0" y2="186.8"></line>
-                  <line x1="210.9" y1="178.0" x2="203.3" y2="174.6"></line>
-                  <line x1="225.8" y1="153.9" x2="219.4" y2="149.4"></line>
+              <!-- 03 Edit: goose behind the monitor -->
+              <g class="mascot-scene" data-scene="3">
+                <ellipse cx="170" cy="122" rx="40" ry="24" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></ellipse>
+                <path d="M150,108 Q158,96 172,100 Q160,112 148,116 Z" fill="var(--teal-bright)" stroke="var(--ink-2)" stroke-width="1.8" stroke-linejoin="round"></path>
+                <path d="M172,100 Q182,84 188,70" stroke="var(--ink-2)" stroke-width="12" fill="none" stroke-linecap="round"></path>
+                <path d="M172,100 Q182,84 188,70" stroke="var(--gold-bright)" stroke-width="7" fill="none" stroke-linecap="round"></path>
+                <circle cx="190" cy="66" r="10" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></circle>
+                <path d="M199,64 L214,68 L199,72 Z" fill="var(--ink-2)"></path>
+                <circle cx="194" cy="63" r="1.6" fill="var(--ink)"></circle>
+                <path d="M150,206 L210,206 L202,214 L158,214 Z" fill="var(--ink-3)" stroke="var(--gold-bright)" stroke-width="2" stroke-linejoin="round"></path>
+                <rect x="174" y="192" width="10" height="16" fill="var(--ink-3)" stroke="var(--gold-bright)" stroke-width="1.6"></rect>
+                <rect x="84" y="104" width="176" height="92" rx="6" fill="var(--ink-3)" stroke="var(--gold-bright)" stroke-width="2"></rect>
+                <circle cx="104" cy="122" r="4" fill="var(--gold-bright)"></circle>
+                <circle cx="116" cy="116" r="4" fill="var(--teal-bright)"></circle>
+                <circle cx="120" cy="128" r="4" fill="#e8604a"></circle>
+                <polyline points="100,160 112,146 124,168 136,150 148,164 160,148 172,162 184,150 196,158 208,150 220,156 232,150 244,156" stroke="var(--teal-bright)" stroke-width="1.6" fill="none"></polyline>
+                <rect x="100" y="178" width="62" height="8" rx="2" fill="var(--gold-bright)" opacity=".85"></rect>
+                <rect x="168" y="178" width="76" height="8" rx="2" fill="var(--teal-deep)" stroke="var(--gold-bright)" stroke-width="1"></rect>
+              </g>
+
+              <!-- 04 Deliver: goose flying off with a delivery -->
+              <g class="mascot-scene" data-scene="4">
+                <g stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round" opacity=".4">
+                  <path d="M34 196 q22 2 38 -8"></path>
+                  <path d="M24 176 q24 0 42 -12"></path>
+                  <path d="M18 154 q26 -2 44 -16"></path>
                 </g>
-                <text class="lens-scale-text" x="160" y="213" text-anchor="middle" font-size="9">1M · 3 · 10 · ∞</text>
-                <path class="lens-index" d="M160 185 L155 176 L165 176 Z"></path>
-              </g>
-
-              <g class="cam-deliver">
-                <circle class="lens-glass" cx="160" cy="130" r="55"></circle>
-                <g class="lens-logo" clip-path="url(#lensLogoClip)">
-                  <image id="lensLogoImg" x="112" y="98" width="96" height="64" preserveAspectRatio="xMidYMid meet"></image>
-                </g>
-                <circle class="lens-glass-hi" cx="146" cy="112" r="12"></circle>
+                <path d="M96 160 L68 172 L102 180 Z" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2" stroke-linejoin="round"></path>
+                <ellipse cx="152" cy="142" rx="48" ry="19" transform="rotate(-20 152 142)" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></ellipse>
+                <path d="M138 128 C118 92 138 54 184 42 C160 62 158 88 170 104 C150 100 138 112 138 128 Z" fill="var(--teal-bright)" stroke="var(--ink-2)" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="M187 122 Q210 96 203 66" stroke="var(--ink-2)" stroke-width="15" fill="none" stroke-linecap="round"></path>
+                <path d="M187 122 Q210 96 203 66" stroke="var(--gold-bright)" stroke-width="9" fill="none" stroke-linecap="round"></path>
+                <circle cx="204" cy="62" r="12" fill="var(--gold-bright)" stroke="var(--ink-2)" stroke-width="2"></circle>
+                <path d="M214 58 L229 53 L216 68 Z" fill="var(--ink-2)"></path>
+                <circle cx="208" cy="58" r="2" fill="var(--ink-2)"></circle>
+                <path d="M128 152 Q136 166 126 177" stroke="var(--ink-2)" stroke-width="3" fill="none" stroke-linecap="round"></path>
+                <path d="M143 156 Q151 170 141 181" stroke="var(--ink-2)" stroke-width="3" fill="none" stroke-linecap="round"></path>
+                <path d="M126,177 Q136,188 148,196" stroke="var(--ink-2)" stroke-width="2" fill="none"></path>
+                <path d="M141,181 Q150,190 158,196" stroke="var(--ink-2)" stroke-width="2" fill="none"></path>
+                <rect x="146" y="196" width="28" height="24" rx="3" fill="var(--ink-3)" stroke="var(--gold-bright)" stroke-width="2"></rect>
+                <line x1="160" y1="196" x2="160" y2="220" stroke="var(--gold-bright)" stroke-width="2"></line>
+                <circle cx="160" cy="194" r="4" fill="var(--gold-bright)"></circle>
+                <circle cx="163" cy="138" r="8.5" fill="var(--teal-deep)" stroke="var(--gold-bright)" stroke-width="2"></circle>
+                <circle cx="163" cy="138" r="2.6" fill="var(--ink)"></circle>
               </g>
             </svg>
           </div>
@@ -1197,22 +1223,22 @@
             <div class="phase-step" data-phase-step="1">
               <span class="phase-num">01</span>
               <h4>Consult</h4>
-              <p>We talk through your goals, timeline, and the story you want told.</p>
+              <p>We talk through your goals, timeline, and the story you want told. After that, we lock in a date and move into pre-production.</p>
             </div>
             <div class="phase-step" data-phase-step="2">
               <span class="phase-num">02</span>
               <h4>Shoot</h4>
-              <p>On-location production with a full crew — camera, sound, and direction.</p>
+              <p>On location with our crew, picking up where pre-production left off.</p>
             </div>
             <div class="phase-step" data-phase-step="3">
               <span class="phase-num">03</span>
               <h4>Edit</h4>
-              <p>Color, sound design, and cut — refined until it's ready to represent you.</p>
+              <p>Color, sound design, and cut — until it's done right.</p>
             </div>
             <div class="phase-step" data-phase-step="4">
               <span class="phase-num">04</span>
               <h4>Deliver</h4>
-              <p>Final assets formatted for web, print, social, and broadcast.</p>
+              <p>Final assets delivered — ready to use.</p>
             </div>
           </div>
         </div>
@@ -2272,18 +2298,27 @@ document.documentElement.classList.add('js-ready');
     var visual = scroller.querySelector('.phase-visual');
     var steps = scroller.querySelectorAll('.phase-step');
 
-    // Reuse the real brand mark already embedded in the nav (.brand-mark img)
-    // instead of duplicating the base64 logo a second time in this SVG.
-    var lensLogoImg = graphic.querySelector('#lensLogoImg');
-    var brandMarkImg = document.querySelector('.brand-mark img');
-    if(lensLogoImg && brandMarkImg && brandMarkImg.src){
-      lensLogoImg.setAttribute('href', brandMarkImg.src);
-      lensLogoImg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', brandMarkImg.src);
-    }
+    // Mobile doesn't pin the shared graphic (see the CSS note above
+    // .phase-step-art), so give each step its own static copy of its scene,
+    // cloned straight out of the main SVG — one source of truth for the art.
+    steps.forEach(function(s){
+      var n = s.dataset.phaseStep;
+      var scene = graphic.querySelector('.mascot-scene[data-scene="' + n + '"]');
+      if(!scene) return;
+      var mini = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      mini.setAttribute('viewBox', '0 0 320 260');
+      mini.setAttribute('class', 'phase-step-art');
+      mini.setAttribute('aria-hidden', 'true');
+      mini.innerHTML = scene.innerHTML;
+      s.insertBefore(mini, s.firstChild);
+    });
 
+    // Exclusive, not cumulative: each phase here is a fully separate scene
+    // (unlike earlier concepts where later phases added onto earlier ones),
+    // so only ever one is-pN class is set at a time.
     function setPhase(n){
       graphic.classList.remove('is-p1','is-p2','is-p3','is-p4');
-      for(var i=1;i<=n;i++){ graphic.classList.add('is-p'+i); }
+      graphic.classList.add('is-p' + n);
       steps.forEach(function(s){ s.classList.toggle('is-active', +s.dataset.phaseStep === n); });
     }
     setPhase(1);
