@@ -1838,13 +1838,15 @@
         </div>
 
         <form class="reveal d3" id="consultForm" onsubmit="return false;">
+          <input type="hidden" name="form" value="Website contact form">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
           <div class="form-row">
-            <div class="field"><label>Name</label><input type="text" placeholder="Jane Doe" required></div>
-            <div class="field"><label>Email</label><input type="email" placeholder="jane@email.com" required></div>
+            <div class="field"><label>Name</label><input type="text" name="name" autocomplete="name" placeholder="Jane Doe" required></div>
+            <div class="field"><label>Email</label><input type="email" name="email" autocomplete="email" placeholder="jane@email.com" required></div>
           </div>
           <div class="field">
             <label>Project Type</label>
-            <select>
+            <select name="project_type">
               <option>Wedding</option>
               <option>Real Estate</option>
               <option>Portrait</option>
@@ -1854,10 +1856,11 @@
               <option>Other</option>
             </select>
           </div>
-          <div class="field"><label>Tell us about your project</label><textarea placeholder="Date, location, and a bit about what you have in mind..."></textarea></div>
+          <div class="field"><label>Tell us about your project</label><textarea name="message" placeholder="Date, location, and a bit about what you have in mind..."></textarea></div>
           <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center;" id="sendBtn">Send Request
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
+          <p class="form-note" id="consultStatus" role="status" aria-live="polite" style="display:none;"></p>
           <p class="form-note">Prefer email? Reach us directly at hello@thegoosecreative.com — we typically reply within one business day.</p>
         </form>
       </div>
@@ -2290,11 +2293,11 @@ document.documentElement.classList.add('js-ready');
   function observeReveals(){
     var els = document.querySelectorAll('.page.is-active .reveal');
     if(io) io.disconnect();
-    io = new IntersectionObserver(function(entries){
+    io = new IntersectionObserver(function(entries, obs){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
           entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
     }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
@@ -2381,18 +2384,54 @@ document.documentElement.classList.add('js-ready');
     requestLayout();
   })();
 
-  // ---------- contact form (static demo) ----------
+  // ---------- contact form → Goose Studio ----------
+  // Paste your Goose Studio address here once it's online, e.g. 'https://studio.thegoosecreative.com'.
+  // Until then (or if it can't be reached), the form opens a pre-filled email to hello@ so no inquiry is lost.
+  var GOOSE_STUDIO_URL = '';
   var form = document.getElementById('consultForm');
   if(form){
-    form.addEventListener('submit', function(){
-      var btn = document.getElementById('sendBtn');
+    var SEND_HTML = 'Send Request <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var statusEl = document.getElementById('consultStatus');
+    function setStatus(msg, isError){
+      if(!statusEl) return;
+      statusEl.textContent = msg || '';
+      statusEl.style.display = msg ? 'block' : 'none';
+      statusEl.style.color = isError ? '#f2b49a' : 'var(--teal-bright)';
+    }
+    function finish(btn){
+      btn.disabled = false;
       btn.innerHTML = 'Request Received ✓';
       btn.style.background = 'var(--teal)';
-      setTimeout(function(){
-        btn.innerHTML = 'Send Request <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-        btn.style.background = '';
-        form.reset();
-      }, 2600);
+      setStatus("Thank you! We'll be in touch within one business day.");
+      form.reset();
+      setTimeout(function(){ btn.innerHTML = SEND_HTML; btn.style.background = ''; }, 3200);
+    }
+    function emailFallback(data, btn){
+      var body = 'Name: ' + (data.get('name')||'') + '\nEmail: ' + (data.get('email')||'') +
+        '\nProject type: ' + (data.get('project_type')||'') + '\n\n' + (data.get('message')||'');
+      window.location.href = 'mailto:hello@thegoosecreative.com?subject=' +
+        encodeURIComponent('Project inquiry: ' + (data.get('project_type')||'') + ' — ' + (data.get('name')||'')) +
+        '&body=' + encodeURIComponent(body);
+      btn.disabled = false;
+      btn.innerHTML = SEND_HTML;
+      setStatus('Your email app should open with your message ready to send.');
+    }
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = document.getElementById('sendBtn');
+      var data = new FormData(form);
+      if(data.get('website')) { finish(btn); return; }
+      btn.disabled = true;
+      btn.innerHTML = 'Sending…';
+      setStatus('');
+      if(!GOOSE_STUDIO_URL){ emailFallback(data, btn); return; }
+      fetch(GOOSE_STUDIO_URL.replace(/\/$/, '') + '/api/inquiry', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+        .then(function(r){ return r.json().catch(function(){ return { ok: r.ok }; }); })
+        .then(function(j){
+          if(j && j.ok) { finish(btn); }
+          else { btn.disabled = false; btn.innerHTML = SEND_HTML; setStatus((j && j.error) || 'Something went wrong. Please email us instead.', true); }
+        })
+        .catch(function(){ emailFallback(data, btn); });
     });
   }
 
